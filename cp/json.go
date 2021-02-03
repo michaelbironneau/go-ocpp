@@ -19,7 +19,7 @@ func (cp *chargePoint) Connection() *ws.Conn {
 
 // tries to reach CS, if succeeded handle
 func (cp *chargePoint) getNewWebsocketConnection() error {
-	conn, err := ws.Dial(cp.identity, cp.centralSystemURL, cp.version)
+	conn, err := ws.Dial(cp.centralSystemURL, cp.version, cp.headers)
 	if err != nil {
 		return err
 	}

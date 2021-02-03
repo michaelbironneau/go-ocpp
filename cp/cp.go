@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net/http"
 
 	"github.com/michaelbironneau/go-ocpp"
 	"github.com/michaelbironneau/go-ocpp/internal/service"
@@ -30,6 +31,7 @@ type chargePoint struct {
 	service.CentralSystem
 	identity         string
 	centralSystemURL string
+	headers          http.Header
 	version          ocpp.Version
 	transport        ocpp.Transport
 	conn             *ws.Conn
@@ -39,13 +41,14 @@ type chargePoint struct {
 
 // Run the charge point on the given port
 // and handles each incoming CentralSystemRequest
-func New(ctx context.Context, identity, csURL string, version ocpp.Version, transport ocpp.Transport, port *string, cshandler CentralSystemMessageHandler) (*chargePoint, error) {
+func New(ctx context.Context, identity, csURL string, version ocpp.Version, transport ocpp.Transport, port *string, headers http.Header, cshandler CentralSystemMessageHandler) (*chargePoint, error) {
 	cp := &chargePoint{
 		identity:         identity,
 		centralSystemURL: csURL,
 		version:          version,
 		transport:        transport,
 		ctx:              ctx,
+		headers: headers,
 		connectedChan:    make(chan struct{}),
 	}
 	if transport == ocpp.JSON {
