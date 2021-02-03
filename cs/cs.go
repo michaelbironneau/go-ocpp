@@ -3,6 +3,7 @@ package cs
 import (
 	"errors"
 	"fmt"
+	"github.com/michaelbironneau/go-ocpp/messages/v1x/csresp"
 	"net/http"
 	"net/http/httputil"
 	"strings"
@@ -13,7 +14,6 @@ import (
 	"github.com/michaelbironneau/go-ocpp/internal/service"
 	"github.com/michaelbironneau/go-ocpp/messages"
 	"github.com/michaelbironneau/go-ocpp/messages/v1x/cpreq"
-	"github.com/michaelbironneau/go-ocpp/messages/v1x/cpresp"
 	"github.com/michaelbironneau/go-ocpp/soap"
 	"github.com/michaelbironneau/go-ocpp/ws"
 )
@@ -24,7 +24,7 @@ type ChargePointRequestMetadata struct {
 }
 
 // ChargePointMessageHandler handles the OCPP messages coming from the charger
-type ChargePointMessageHandler func(cprequest cpreq.ChargePointRequest, metadata ChargePointRequestMetadata) (cpresp.ChargePointResponse, error)
+type ChargePointMessageHandler func(cprequest cpreq.ChargePointRequest, metadata ChargePointRequestMetadata) (csresp.CentralSystemResponse, error)
 
 type ChargePointConnectionListener func(cpID string)
 type CentralSystem interface {

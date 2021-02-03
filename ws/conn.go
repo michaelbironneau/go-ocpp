@@ -48,7 +48,7 @@ func newConn(socket *websocket.Conn) *Conn {
 		requests: make(chan struct {
 			messages.Request
 			MessageID
-			MessageWrapper
+			ChargerID string 
 		}, 0),
 		ctx:         ctx,
 		cancelCtx:   cancel,
