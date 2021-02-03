@@ -48,7 +48,7 @@ func newConn(socket *websocket.Conn) *Conn {
 		requests: make(chan struct {
 			messages.Request
 			MessageID
-			ChargerID string 
+			ChargerID string
 		}, 0),
 		ctx:         ctx,
 		cancelCtx:   cancel,
@@ -58,7 +58,7 @@ func newConn(socket *websocket.Conn) *Conn {
 
 func Dial(csURL string, version ocpp.Version, h http.Header) (*Conn, error) {
 	dialer := websocket.Dialer{
-		Subprotocols: []string{ocppVersionToProtocol(version)},
+		//Subprotocols: []string{ocppVersionToProtocol(version)},
 	}
 	socket, _, err := dialer.Dial(csURL, h)
 	if err != nil {

@@ -33,6 +33,7 @@ func (cp *chargePoint) getNewWebsocketConnection() error {
 }
 
 func (cp *chargePoint) handleWebsocketConnection(cshandler cs.ChargePointMessageHandler) {
+	log.Debug("Handling websocket connection...")
 	for {
 		select {
 		case <-cp.ctx.Done():
@@ -48,12 +49,15 @@ func (cp *chargePoint) handleWebsocketConnection(cshandler cs.ChargePointMessage
 					log.Error("On restarting connection with Central System: %w", err)
 					<-time.After(websocketConnectionRetryInterval)
 				} else {
+					log.Debug("Got new connection")
 					break
 				}
 			}
-		case <-cp.conn.ReadMessageAsync():
+		case err := <-cp.conn.ReadMessageAsync():
+			log.Error("Error reading message: %v", err)
 			continue
 		case req := <-cp.conn.Requests():
+			log.Debug("Received request")
 			cprequest, ok := req.Request.(cpreq.ChargePointRequest)
 			if !ok {
 				log.Error(csreq.ErrorNotCentralSystemRequest.Error())
