@@ -1,6 +1,8 @@
 package cp
 
 import (
+	"github.com/michaelbironneau/go-ocpp/cs"
+	"github.com/michaelbironneau/go-ocpp/messages/v1x/cpreq"
 	"time"
 
 	"github.com/michaelbironneau/go-ocpp/internal/log"
@@ -30,7 +32,7 @@ func (cp *chargePoint) getNewWebsocketConnection() error {
 	return nil
 }
 
-func (cp *chargePoint) handleWebsocketConnection(cshandler CentralSystemMessageHandler) {
+func (cp *chargePoint) handleWebsocketConnection(cshandler cs.ChargePointMessageHandler) {
 	for {
 		select {
 		case <-cp.ctx.Done():
@@ -52,11 +54,11 @@ func (cp *chargePoint) handleWebsocketConnection(cshandler CentralSystemMessageH
 		case <-cp.conn.ReadMessageAsync():
 			continue
 		case req := <-cp.conn.Requests():
-			cprequest, ok := req.Request.(csreq.CentralSystemRequest)
+			cprequest, ok := req.Request.(cpreq.ChargePointRequest)
 			if !ok {
 				log.Error(csreq.ErrorNotCentralSystemRequest.Error())
 			}
-			cpresponse, err := cshandler(cprequest)
+			cpresponse, err := cshandler(cprequest, cs.ChargePointRequestMetadata{})
 			err = cp.conn.SendResponse(req.MessageID, cpresponse, err)
 			if err != nil {
 				log.Error(err.Error())

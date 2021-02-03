@@ -2,15 +2,14 @@ package cp
 
 import (
 	"context"
-	"errors"
 	"fmt"
+	"github.com/michaelbironneau/go-ocpp/cs"
 	"net/http"
 
 	"github.com/michaelbironneau/go-ocpp"
 	"github.com/michaelbironneau/go-ocpp/internal/service"
 	"github.com/michaelbironneau/go-ocpp/messages/v1x/csreq"
 	"github.com/michaelbironneau/go-ocpp/messages/v1x/csresp"
-	"github.com/michaelbironneau/go-ocpp/soap"
 	"github.com/michaelbironneau/go-ocpp/ws"
 )
 
@@ -41,7 +40,7 @@ type chargePoint struct {
 
 // Run the charge point on the given port
 // and handles each incoming CentralSystemRequest
-func New(ctx context.Context, identity, csURL string, version ocpp.Version, transport ocpp.Transport, port *string, headers http.Header, cshandler CentralSystemMessageHandler) (*chargePoint, error) {
+func New(ctx context.Context, identity, csURL string, version ocpp.Version, transport ocpp.Transport, port *string, headers http.Header, cshandler cs.ChargePointMessageHandler) (*chargePoint, error) {
 	cp := &chargePoint{
 		identity:         identity,
 		centralSystemURL: csURL,
@@ -59,11 +58,7 @@ func New(ctx context.Context, identity, csURL string, version ocpp.Version, tran
 		go cp.handleWebsocketConnection(cshandler)
 	}
 	if transport == ocpp.SOAP {
-		cp.CentralSystem = service.NewCentralSystemSOAP(csURL, &soap.CallOptions{ChargeBoxIdentity: identity})
-		if port == nil {
-			return nil, errors.New("port must be set when running a SOAP ChargePoint")
-		}
-		go handleSoap(cp.ctx, *port, cshandler)
+		// remove
 	}
 	return cp, nil
 }
