@@ -58,7 +58,7 @@ func (cp *chargePoint) handleWebsocketConnection(cshandler cs.ChargePointMessage
 			if !ok {
 				log.Error(csreq.ErrorNotCentralSystemRequest.Error())
 			}
-			cpresponse, err := cshandler(cprequest, cs.ChargePointRequestMetadata{})
+			cpresponse, err := cshandler(cprequest, cs.ChargePointRequestMetadata{ChargePointID: req.ChargerID})
 			err = cp.conn.SendResponse(req.MessageID, cpresponse, err)
 			if err != nil {
 				log.Error(err.Error())
