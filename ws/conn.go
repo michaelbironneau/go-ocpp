@@ -53,11 +53,11 @@ func newConn(socket *websocket.Conn) *Conn {
 	}
 }
 
-func Dial(identity, csURL string, version ocpp.Version) (*Conn, error) {
+func Dial(identity, csURL string, version ocpp.Version, h http.Header) (*Conn, error) {
 	dialer := websocket.Dialer{
 		Subprotocols: []string{ocppVersionToProtocol(version)},
 	}
-	socket, _, err := dialer.Dial(csURL+"/"+identity, http.Header{})
+	socket, _, err := dialer.Dial(csURL+"/"+identity, h)
 	if err != nil {
 		return nil, err
 	}
@@ -84,9 +84,9 @@ func ocppVersionToProtocol(version ocpp.Version) string {
 
 func Handshake(w http.ResponseWriter, r *http.Request, supportedVersions []ocpp.Version) (*Conn, error) {
 	upgraderHeader := http.Header{}
-	for _, v := range supportedVersions {
-		upgraderHeader.Add("Sec-WebSocket-Protocol", ocppVersionToProtocol(v))
-	}
+	//for _, v := range supportedVersions {
+	//	upgraderHeader.Add("Sec-WebSocket-Protocol", ocppVersionToProtocol(v))
+	//}
 	socket, err := upgrader.Upgrade(w, r, upgraderHeader)
 	conn := newConn(socket)
 	return conn, err
