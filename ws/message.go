@@ -18,11 +18,13 @@ const (
 )
 
 type Message interface {
+	ChargerID() string
 	Type() MessageType
 	ID() MessageID
 }
 
 type CallMessage struct {
+	chargerID string
 	id MessageID
 	Action
 	Payload map[string]interface{}
@@ -34,6 +36,10 @@ func NewCallMessage(id MessageID, action Action, payload map[string]interface{})
 		Action:  action,
 		Payload: payload,
 	}
+}
+
+func (call *CallMessage) ChargerID() string {
+	return call.chargerID
 }
 
 func (call *CallMessage) Type() MessageType {
@@ -49,6 +55,7 @@ func (call *CallMessage) MarshalJSON() ([]byte, error) {
 }
 
 type CallResultMessage struct {
+	chargerID string
 	id      MessageID
 	Payload interface{} //map[string]interface{}
 }
@@ -58,6 +65,10 @@ func NewCallResult(id MessageID, payload interface{}) *CallResultMessage {
 		id:      id,
 		Payload: payload,
 	}
+}
+
+func (result *CallResultMessage) ChargerID() string {
+	return result.chargerID
 }
 
 func (result *CallResultMessage) Type() MessageType {
@@ -101,6 +112,7 @@ func (code ErrorCode) Error() string {
 }
 
 type CallErrorMessage struct {
+	chargerID        string
 	id               MessageID
 	errorCode        ErrorCode
 	errorDescription string
@@ -122,6 +134,10 @@ func NewCallErrorMessage(id MessageID, errorCode ErrorCode, errorDescription str
 
 func (err *CallErrorMessage) Type() MessageType {
 	return CallError
+}
+
+func (err *CallErrorMessage) ChargerID() string {
+	return err.chargerID
 }
 
 func (err *CallErrorMessage) ID() MessageID {

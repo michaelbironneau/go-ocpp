@@ -21,6 +21,7 @@ import (
 )
 
 type CallResponse struct {
+	chargerID string
 	response messages.Response
 	err      error
 }
@@ -34,6 +35,7 @@ type Conn struct {
 	requests     chan struct {
 		messages.Request
 		MessageID
+		ChargerID string
 	}
 	responsesOf map[MessageID]chan CallResponse
 }
@@ -46,6 +48,7 @@ func newConn(socket *websocket.Conn) *Conn {
 		requests: make(chan struct {
 			messages.Request
 			MessageID
+			MessageWrapper
 		}, 0),
 		ctx:         ctx,
 		cancelCtx:   cancel,
@@ -114,52 +117,55 @@ var (
 )
 
 func UnmarshalMessage(msg []byte) (Message, error) {
-	var frame []interface{}
+	var frame struct {
+		ChargerID string `json:"charger"`
+		OCPP []interface{} `json:"ocpp"`
+	}
 	err := json.Unmarshal(msg, &frame)
 	if err != nil {
 		return nil, fmt.Errorf("on unmarshalling websocket message: %w", err)
 	}
-	msgType, ok := frame[0].(float64)
+	msgType, ok := frame.OCPP[0].(float64)
 	if !ok {
 		return nil, fmt.Errorf("first field is not a message type: %w", err)
 	}
-	idStr, ok := frame[1].(string)
+	idStr, ok := frame.OCPP[1].(string)
 	if !ok {
 		return nil, fmt.Errorf("second field is not a message ID: %w", err)
 	}
 	id := MessageID(idStr)
 	switch MessageType(msgType) {
 	case Call:
-		actionStr, ok := frame[2].(string)
+		actionStr, ok := frame.OCPP[2].(string)
 		if !ok {
 			return nil, fmt.Errorf("third field is not action: %w", err)
 		}
 		action := Action(actionStr)
-		payload, ok := frame[3].(map[string]interface{})
+		payload, ok := frame.OCPP[3].(map[string]interface{})
 		if !ok {
 			return nil, fmt.Errorf("fourth field is not payload: %w", err)
 		}
-		return &CallMessage{id, action, payload}, nil
+		return &CallMessage{frame.ChargerID, id, action, payload}, nil
 	case CallResult:
-		payload, ok := frame[2].(map[string]interface{})
+		payload, ok := frame.OCPP[2].(map[string]interface{})
 		if !ok {
 			return nil, fmt.Errorf("third field is not payload: %w", err)
 		}
-		return &CallResultMessage{id, payload}, nil
+		return &CallResultMessage{frame.ChargerID,id, payload}, nil
 	case CallError:
-		codeStr, ok := frame[2].(string)
+		codeStr, ok := frame.OCPP[2].(string)
 		if !ok {
 			return nil, fmt.Errorf("third field is not error code: %w", err)
 		}
-		description, ok := frame[3].(string)
+		description, ok := frame.OCPP[3].(string)
 		if !ok {
 			return nil, fmt.Errorf("fourth field is not error description: %w", err)
 		}
-		details, ok := frame[4].(map[string]interface{})
+		details, ok := frame.OCPP[4].(map[string]interface{})
 		if !ok {
 			return nil, fmt.Errorf("fifth field is not error details: %w", err)
 		}
-		return &CallErrorMessage{id, ErrorCode(codeStr), description, details}, nil
+		return &CallErrorMessage{frame.ChargerID,id, ErrorCode(codeStr), description, details}, nil
 	}
 	return nil, nil
 }
@@ -206,7 +212,8 @@ func (c *Conn) ReadMessage() error {
 		c.requests <- struct {
 			messages.Request
 			MessageID
-		}{req, msg.ID()}
+			ChargerID string
+		}{req, msg.ID(), msg.ChargerID()}
 	case *CallResultMessage:
 		var resp messages.Response
 		resp, wserr = c.callResultToResponse(m)
@@ -282,6 +289,7 @@ func (c *Conn) sendMessage(msg Message) error {
 func (c *Conn) Requests() <-chan struct {
 	messages.Request
 	MessageID
+	ChargerID string
 } {
 	return c.requests
 }
