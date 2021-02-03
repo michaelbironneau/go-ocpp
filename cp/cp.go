@@ -5,12 +5,12 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/eduhenke/go-ocpp"
-	"github.com/eduhenke/go-ocpp/internal/service"
-	"github.com/eduhenke/go-ocpp/messages/v1x/csreq"
-	"github.com/eduhenke/go-ocpp/messages/v1x/csresp"
-	"github.com/eduhenke/go-ocpp/soap"
-	"github.com/eduhenke/go-ocpp/ws"
+	"github.com/michaelbironneau/go-ocpp"
+	"github.com/michaelbironneau/go-ocpp/internal/service"
+	"github.com/michaelbironneau/go-ocpp/messages/v1x/csreq"
+	"github.com/michaelbironneau/go-ocpp/messages/v1x/csresp"
+	"github.com/michaelbironneau/go-ocpp/soap"
+	"github.com/michaelbironneau/go-ocpp/ws"
 )
 
 // CentralSystemMessageHandler handles the OCPP messages coming from the central system

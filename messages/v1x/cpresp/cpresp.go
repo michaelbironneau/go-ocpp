@@ -2,7 +2,7 @@ package cpresp
 
 import (
 	"errors"
-	"github.com/eduhenke/go-ocpp/messages"
+	"github.com/michaelbironneau/go-ocpp/messages"
 )
 
 // ChargePointResponse is a response coming from the central system to the chargepoint

@@ -7,10 +7,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/eduhenke/go-ocpp"
-	"github.com/eduhenke/go-ocpp/cs"
-	"github.com/eduhenke/go-ocpp/messages/v1x/cpreq"
-	"github.com/eduhenke/go-ocpp/messages/v1x/cpresp"
+	"github.com/michaelbironneau/go-ocpp"
+	"github.com/michaelbironneau/go-ocpp/cs"
+	"github.com/michaelbironneau/go-ocpp/messages/v1x/cpreq"
+	"github.com/michaelbironneau/go-ocpp/messages/v1x/cpresp"
 )
 
 func main() {

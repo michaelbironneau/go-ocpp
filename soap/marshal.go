@@ -4,10 +4,10 @@ import (
 	"encoding/xml"
 	"errors"
 
-	"github.com/eduhenke/go-ocpp/messages/v1x/cpreq"
-	"github.com/eduhenke/go-ocpp/messages/v1x/cpresp"
-	"github.com/eduhenke/go-ocpp/messages/v1x/csreq"
-	"github.com/eduhenke/go-ocpp/messages/v1x/csresp"
+	"github.com/michaelbironneau/go-ocpp/messages/v1x/cpreq"
+	"github.com/michaelbironneau/go-ocpp/messages/v1x/cpresp"
+	"github.com/michaelbironneau/go-ocpp/messages/v1x/csreq"
+	"github.com/michaelbironneau/go-ocpp/messages/v1x/csresp"
 )
 
 func Unmarshal(data []byte) (receivedEnvelope, error) {

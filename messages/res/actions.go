@@ -1,9 +1,9 @@
 package res
 
 import (
-	"github.com/eduhenke/go-ocpp/messages"
-	"github.com/eduhenke/go-ocpp/messages/v1x/cpresp"
-	"github.com/eduhenke/go-ocpp/messages/v1x/csresp"
+	"github.com/michaelbironneau/go-ocpp/messages"
+	"github.com/michaelbironneau/go-ocpp/messages/v1x/cpresp"
+	"github.com/michaelbironneau/go-ocpp/messages/v1x/csresp"
 )
 
 func FromActionName(action string) messages.Response {

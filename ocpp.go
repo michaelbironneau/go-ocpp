@@ -1,8 +1,8 @@
 package ocpp
 
 import (
-	"github.com/eduhenke/go-ocpp/internal/log"
-	"github.com/eduhenke/go-ocpp/messages"
+	"github.com/michaelbironneau/go-ocpp/internal/log"
+	"github.com/michaelbironneau/go-ocpp/messages"
 )
 
 type MessageHandler func(request messages.Request, cpID string) (messages.Response, error)

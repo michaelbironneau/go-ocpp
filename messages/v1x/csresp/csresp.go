@@ -2,7 +2,7 @@ package csresp
 
 import (
 	"errors"
-	"github.com/eduhenke/go-ocpp/messages"
+	"github.com/michaelbironneau/go-ocpp/messages"
 )
 
 // CentralSystemResponse is a response coming from the chargepoint to the central system

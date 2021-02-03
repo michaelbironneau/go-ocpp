@@ -1,9 +1,9 @@
 package req
 
 import (
-	"github.com/eduhenke/go-ocpp/messages"
-	"github.com/eduhenke/go-ocpp/messages/v1x/cpreq"
-	"github.com/eduhenke/go-ocpp/messages/v1x/csreq"
+	"github.com/michaelbironneau/go-ocpp/messages"
+	"github.com/michaelbironneau/go-ocpp/messages/v1x/cpreq"
+	"github.com/michaelbironneau/go-ocpp/messages/v1x/csreq"
 )
 
 func FromActionName(action string) messages.Request {

@@ -3,10 +3,10 @@ package cp
 import (
 	"time"
 
-	"github.com/eduhenke/go-ocpp/internal/log"
-	"github.com/eduhenke/go-ocpp/internal/service"
-	"github.com/eduhenke/go-ocpp/messages/v1x/csreq"
-	"github.com/eduhenke/go-ocpp/ws"
+	"github.com/michaelbironneau/go-ocpp/internal/log"
+	"github.com/michaelbironneau/go-ocpp/internal/service"
+	"github.com/michaelbironneau/go-ocpp/messages/v1x/csreq"
+	"github.com/michaelbironneau/go-ocpp/ws"
 )
 
 const (

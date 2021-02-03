@@ -1,4 +1,4 @@
-module github.com/eduhenke/go-ocpp
+module github.com/michaelbironneau/go-ocpp
 
 require (
 	github.com/google/uuid v1.1.0

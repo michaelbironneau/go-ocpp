@@ -1,10 +1,10 @@
 package service
 
 import (
-	"github.com/eduhenke/go-ocpp/messages/v1x/csreq"
-	"github.com/eduhenke/go-ocpp/messages/v1x/csresp"
-	"github.com/eduhenke/go-ocpp/soap"
-	"github.com/eduhenke/go-ocpp/ws"
+	"github.com/michaelbironneau/go-ocpp/messages/v1x/csreq"
+	"github.com/michaelbironneau/go-ocpp/messages/v1x/csresp"
+	"github.com/michaelbironneau/go-ocpp/soap"
+	"github.com/michaelbironneau/go-ocpp/ws"
 )
 
 type ChargePoint interface {

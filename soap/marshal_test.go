@@ -1,7 +1,7 @@
 package soap
 
 import (
-	"github.com/eduhenke/go-ocpp/messages/v1x/cpreq"
+	"github.com/michaelbironneau/go-ocpp/messages/v1x/cpreq"
 	"testing"
 )
 

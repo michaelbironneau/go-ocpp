@@ -2,7 +2,7 @@ package cpreq
 
 import (
 	"errors"
-	"github.com/eduhenke/go-ocpp/messages"
+	"github.com/michaelbironneau/go-ocpp/messages"
 )
 
 // ChargePointRequest is a request coming from the chargepoint to the central system

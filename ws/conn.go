@@ -10,13 +10,13 @@ import (
 	"sync"
 	"time"
 
-	"github.com/eduhenke/go-ocpp/internal"
-	"github.com/eduhenke/go-ocpp/internal/log"
-	"github.com/eduhenke/go-ocpp/messages"
-	"github.com/eduhenke/go-ocpp/messages/req"
+	"github.com/michaelbironneau/go-ocpp/internal"
+	"github.com/michaelbironneau/go-ocpp/internal/log"
+	"github.com/michaelbironneau/go-ocpp/messages"
+	"github.com/michaelbironneau/go-ocpp/messages/req"
 	"github.com/google/uuid"
 
-	"github.com/eduhenke/go-ocpp"
+	"github.com/michaelbironneau/go-ocpp"
 	"github.com/gorilla/websocket"
 )
 
