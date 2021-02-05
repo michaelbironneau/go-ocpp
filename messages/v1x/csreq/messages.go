@@ -40,9 +40,9 @@ type ChargingProfile struct {
 	ChargingProfileKind    string            `json:"chargingProfileKind" xml:"chargingProfileKind"`
 	ChargingProfilePurpose string            `json:"chargingProfilePurpose" xml:"chargingProfilePurpose"`
 	ChargingSchedule       *ChargingSchedule `json:"chargingSchedule" xml:"chargingSchedule"`
-	RecurrencyKind         string            `json:"recurrencyKind,omitempty" xml:"recurrencyKind,omitempty"`
+	//RecurrencyKind         string            `json:"-"`//`json:"recurrencyKind,omitempty" xml:"recurrencyKind,omitempty"`
 	StackLevel             int               `json:"stackLevel" xml:"stackLevel"`
-	TransactionId          int               `json:"transactionId,omitempty" xml:"transactionId,omitempty"`
+	//TransactionId          int               `json:"transactionId,omitempty" xml:"transactionId,omitempty"`
 	ValidFrom              *time.Time        `json:"validFrom,omitempty" xml:"validFrom,omitempty"`
 	ValidTo                *time.Time        `json:"validTo,omitempty" xml:"validTo,omitempty"`
 }
@@ -51,15 +51,15 @@ type ChargingProfile struct {
 type ChargingSchedule struct {
 	ChargingRateUnit       string                         `json:"chargingRateUnit" xml:"chargingRateUnit"`
 	ChargingSchedulePeriod []*ChargingSchedulePeriodItems `json:"chargingSchedulePeriod" xml:"chargingSchedulePeriod"`
-	Duration               int                            `json:"duration,omitempty" xml:"duration,omitempty"`
-	MinChargingRate        float64                        `json:"minChargingRate,omitempty" xml:"minChargingRate,omitempty"`
+	//Duration               int                            `json:"-"` //`json:"duration,omitempty" xml:"duration,omitempty"`
+	//MinChargingRate        float64                        `json:"-"` //`json:"minChargingRate,omitempty" xml:"minChargingRate,omitempty"`
 	StartSchedule          *time.Time                     `json:"startSchedule,omitempty" xml:"startSchedule,omitempty"`
 }
 
 // ChargingSchedulePeriodItems
 type ChargingSchedulePeriodItems struct {
 	Limit        float64 `json:"limit" xml:"limit"`
-	NumberPhases int     `json:"numberPhases,omitempty" xml:"numberPhases,omitempty"`
+	//NumberPhases int     `json:"-"` //`json:"numberPhases,omitempty" xml:"numberPhases,omitempty"`
 	StartPeriod  int     `json:"startPeriod" xml:"startPeriod"`
 }
 

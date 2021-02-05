@@ -3,6 +3,7 @@ package ws
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/michaelbironneau/go-ocpp/internal/log"
 
 	"github.com/michaelbironneau/go-ocpp/messages"
 )
@@ -30,11 +31,12 @@ type CallMessage struct {
 	Payload map[string]interface{}
 }
 
-func NewCallMessage(id MessageID, action Action, payload map[string]interface{}) *CallMessage {
+func NewCallMessage(id MessageID, chargerID string, action Action, payload map[string]interface{}) *CallMessage {
 	return &CallMessage{
 		id:      id,
 		Action:  action,
 		Payload: payload,
+		chargerID: chargerID,
 	}
 }
 
@@ -51,7 +53,15 @@ func (call *CallMessage) ID() MessageID {
 }
 
 func (call *CallMessage) MarshalJSON() ([]byte, error) {
-	return json.Marshal([]interface{}{call.Type(), call.id, call.Action, call.Payload})
+	var wrapper struct {
+		ChargerID string `json:"charger"`
+		OCPP []interface{} `json:"ocpp"`
+	}
+	wrapper.ChargerID = call.chargerID
+	wrapper.OCPP = []interface{}{call.Type(), call.id, call.Action, call.Payload}
+	b, err := json.Marshal(wrapper)
+	log.Debug("marshal: %s\n", b)
+	return b, err
 }
 
 type CallResultMessage struct {
@@ -154,7 +164,7 @@ func unmarshalResponse(id MessageID, resp messages.Response, err error) Message 
 	return NewCallResult(id, resp)
 }
 
-func UnmarshalRequest(id MessageID, req messages.Request) (*CallMessage, error) {
+func UnmarshalRequest(id MessageID, chargerID string, req messages.Request) (*CallMessage, error) {
 	var inInterface map[string]interface{}
 	inrec, err := json.Marshal(req)
 	if err != nil {
@@ -164,5 +174,5 @@ func UnmarshalRequest(id MessageID, req messages.Request) (*CallMessage, error) 
 	if err != nil {
 		return nil, err
 	}
-	return NewCallMessage(id, Action(req.Action()), inInterface), nil
+	return NewCallMessage(id, chargerID, Action(req.Action()), inInterface), nil
 }

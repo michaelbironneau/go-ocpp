@@ -23,6 +23,6 @@ func NewJSON(conn *ws.Conn) *JSON {
 	}
 }
 
-func (service *JSON) Send(req messages.Request) (messages.Response, error) {
-	return service.conn.SendRequest(req)
+func (service *JSON) Send(chargerID string, req messages.Request) (messages.Response, error) {
+	return service.conn.SendRequest(chargerID, req)
 }

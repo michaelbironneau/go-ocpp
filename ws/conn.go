@@ -294,9 +294,9 @@ func (c *Conn) Requests() <-chan struct {
 	return c.requests
 }
 
-func (c *Conn) SendRequest(request messages.Request) (messages.Response, error) {
+func (c *Conn) SendRequest(chargerID string, request messages.Request) (messages.Response, error) {
 	id := MessageID(uuid.New().String())
-	msg, err := UnmarshalRequest(id, request)
+	msg, err := UnmarshalRequest(id, chargerID, request)
 	if err != nil {
 		return nil, err
 	}

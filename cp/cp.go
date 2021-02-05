@@ -40,7 +40,7 @@ type chargePoint struct {
 
 // Run the charge point on the given port
 // and handles each incoming CentralSystemRequest
-func New(ctx context.Context, identity, csURL string, version ocpp.Version, transport ocpp.Transport, port *string, headers http.Header, cshandler cs.ChargePointMessageHandler) (*chargePoint, error) {
+func New(ctx context.Context, identity, csURL string, version ocpp.Version, transport ocpp.Transport, port *string, headers http.Header, cshandler cs.ChargePointMessageHandler) (ChargePoint, error) {
 	cp := &chargePoint{
 		identity:         identity,
 		centralSystemURL: csURL,

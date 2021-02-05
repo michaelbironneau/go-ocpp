@@ -9,7 +9,7 @@ import (
 )
 
 type CentralSystem interface {
-	Send(request csreq.CentralSystemRequest) (csresp.CentralSystemResponse, error)
+	Send(chargerID string, request csreq.CentralSystemRequest) (csresp.CentralSystemResponse, error)
 }
 
 type CentralSystemSOAP struct {
@@ -17,7 +17,7 @@ type CentralSystemSOAP struct {
 }
 
 
-func (service *CentralSystemSOAP) Send(req cpreq.ChargePointRequest) (cpresp.ChargePointResponse, error) {
+func (service *CentralSystemSOAP) Send(chargerID string, req cpreq.ChargePointRequest) (cpresp.ChargePointResponse, error) {
 	rawResp, err := service.SOAP.Send(req)
 	if err != nil {
 		return nil, err
@@ -37,8 +37,8 @@ func NewCentralSystemJSON(conn *ws.Conn) CentralSystem {
 	return &CentralSystemJSON{NewJSON(conn)}
 }
 
-func (service *CentralSystemJSON) Send(request csreq.CentralSystemRequest) (csresp.CentralSystemResponse, error) {
-	rawResp, err := service.JSON.Send(request)
+func (service *CentralSystemJSON) Send(chargerID string, request csreq.CentralSystemRequest) (csresp.CentralSystemResponse, error) {
+	rawResp, err := service.JSON.Send(chargerID, request)
 	if err != nil {
 		return nil, err
 	}

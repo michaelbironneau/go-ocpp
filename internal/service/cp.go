@@ -8,7 +8,7 @@ import (
 )
 
 type ChargePoint interface {
-	Send(csreq.CentralSystemRequest) (csresp.CentralSystemResponse, error)
+	Send(string, csreq.CentralSystemRequest) (csresp.CentralSystemResponse, error)
 }
 
 type ChargePointSOAP struct {
@@ -19,7 +19,7 @@ func NewChargePointSOAP(csURL string, options *soap.CallOptions) ChargePoint {
 	return &ChargePointSOAP{NewSOAP(csURL, options)}
 }
 
-func (service *ChargePointSOAP) Send(req csreq.CentralSystemRequest) (csresp.CentralSystemResponse, error) {
+func (service *ChargePointSOAP) Send(chargerID string, req csreq.CentralSystemRequest) (csresp.CentralSystemResponse, error) {
 	rawResp, err := service.SOAP.Send(req)
 	if err != nil {
 		return nil, err
@@ -39,8 +39,8 @@ func NewChargePointJSON(conn *ws.Conn) ChargePoint {
 	return &ChargePointJSON{NewJSON(conn)}
 }
 
-func (service *ChargePointJSON) Send(req csreq.CentralSystemRequest) (csresp.CentralSystemResponse, error) {
-	rawResp, err := service.JSON.Send(req)
+func (service *ChargePointJSON) Send(chargerID string, req csreq.CentralSystemRequest) (csresp.CentralSystemResponse, error) {
+	rawResp, err := service.JSON.Send(chargerID, req)
 	if err != nil {
 		return nil, err
 	}

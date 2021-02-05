@@ -198,7 +198,7 @@ func (m *ChangeConfiguration) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-func (m *ChargingProfile) MarshalJSON() ([]byte, error) {
+/*func (m *ChargingProfile) MarshalJSON() ([]byte, error) {
 	buf := bytes.NewBuffer(make([]byte, 0))
 	buf.WriteString("{")
 	comma := false
@@ -311,7 +311,7 @@ func (m *ChargingProfile) MarshalJSON() ([]byte, error) {
 	buf.WriteString("}")
 	rv := buf.Bytes()
 	return rv, nil
-}
+}*/
 
 func (m *ChargingProfile) UnmarshalJSON(b []byte) error {
 	chargingProfileIdReceived := false
@@ -346,19 +346,19 @@ func (m *ChargingProfile) UnmarshalJSON(b []byte) error {
 				return err
 			}
 			chargingScheduleReceived = true
-		case "recurrencyKind":
-			if err := json.Unmarshal([]byte(v), &m.RecurrencyKind); err != nil {
-				return err
-			}
+		//case "recurrencyKind":
+		//	if err := json.Unmarshal([]byte(v), &m.RecurrencyKind); err != nil {
+		//		return err
+		//	}
 		case "stackLevel":
 			if err := json.Unmarshal([]byte(v), &m.StackLevel); err != nil {
 				return err
 			}
 			stackLevelReceived = true
-		case "transactionId":
-			if err := json.Unmarshal([]byte(v), &m.TransactionId); err != nil {
-				return err
-			}
+		//case "transactionId":
+		//	if err := json.Unmarshal([]byte(v), &m.TransactionId); err != nil {
+		//		return err
+		//	}
 		case "validFrom":
 			if err := json.Unmarshal([]byte(v), &m.ValidFrom); err != nil {
 				return err
@@ -1276,7 +1276,7 @@ func (m *TriggerMessage) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-func (m *ChargingSchedule) MarshalJSON() ([]byte, error) {
+/*func (m *ChargingSchedule) MarshalJSON() ([]byte, error) {
 	buf := bytes.NewBuffer(make([]byte, 0))
 	buf.WriteString("{")
 	comma := false
@@ -1339,7 +1339,7 @@ func (m *ChargingSchedule) MarshalJSON() ([]byte, error) {
 	buf.WriteString("}")
 	rv := buf.Bytes()
 	return rv, nil
-}
+}*/
 
 func (m *ChargingSchedule) UnmarshalJSON(b []byte) error {
 	chargingRateUnitReceived := false
@@ -1361,14 +1361,14 @@ func (m *ChargingSchedule) UnmarshalJSON(b []byte) error {
 				return err
 			}
 			chargingSchedulePeriodReceived = true
-		case "duration":
-			if err := json.Unmarshal([]byte(v), &m.Duration); err != nil {
-				return err
-			}
-		case "minChargingRate":
-			if err := json.Unmarshal([]byte(v), &m.MinChargingRate); err != nil {
-				return err
-			}
+		//case "duration":
+		//	if err := json.Unmarshal([]byte(v), &m.Duration); err != nil {
+		//		return err
+		//	}
+		//case "minChargingRate":
+		//	if err := json.Unmarshal([]byte(v), &m.MinChargingRate); err != nil {
+		//		return err
+		//	}
 		case "startSchedule":
 			if err := json.Unmarshal([]byte(v), &m.StartSchedule); err != nil {
 				return err
@@ -1386,7 +1386,7 @@ func (m *ChargingSchedule) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-func (m *ChargingSchedulePeriodItems) MarshalJSON() ([]byte, error) {
+/*func (m *ChargingSchedulePeriodItems) MarshalJSON() ([]byte, error) {
 	buf := bytes.NewBuffer(make([]byte, 0))
 	buf.WriteString("{")
 	comma := false
@@ -1431,7 +1431,7 @@ func (m *ChargingSchedulePeriodItems) MarshalJSON() ([]byte, error) {
 	buf.WriteString("}")
 	rv := buf.Bytes()
 	return rv, nil
-}
+}*/
 
 func (m *ChargingSchedulePeriodItems) UnmarshalJSON(b []byte) error {
 	limitReceived := false
@@ -1448,10 +1448,10 @@ func (m *ChargingSchedulePeriodItems) UnmarshalJSON(b []byte) error {
 				return err
 			}
 			limitReceived = true
-		case "numberPhases":
-			if err := json.Unmarshal([]byte(v), &m.NumberPhases); err != nil {
-				return err
-			}
+		//case "numberPhases":
+		//	if err := json.Unmarshal([]byte(v), &m.NumberPhases); err != nil {
+		//		return err
+		//	}
 		case "startPeriod":
 			if err := json.Unmarshal([]byte(v), &m.StartPeriod); err != nil {
 				return err
