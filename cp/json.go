@@ -54,7 +54,9 @@ func (cp *chargePoint) handleWebsocketConnection(cshandler cs.ChargePointMessage
 				}
 			}
 		case err := <-cp.conn.ReadMessageAsync():
-			log.Error("Error reading message: %v", err)
+			if err != nil {
+				log.Error("Error reading message: %v", err)
+			}
 			continue
 		case req := <-cp.conn.Requests():
 			log.Debug("Received request")
