@@ -125,6 +125,9 @@ func UnmarshalMessage(msg []byte) (Message, error) {
 	if err != nil {
 		return nil, fmt.Errorf("on unmarshalling websocket message: %w", err)
 	}
+	if len(frame.OCPP) == 0 {
+		return nil, fmt.Errorf("not an OCPP message: %s", string(msg))
+	}
 	msgType, ok := frame.OCPP[0].(float64)
 	if !ok {
 		return nil, fmt.Errorf("first field is not a message type: %w", err)
