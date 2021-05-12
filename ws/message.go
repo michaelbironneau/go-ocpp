@@ -93,6 +93,9 @@ func (result *CallResultMessage) ID() MessageID {
 	return result.id
 }
 func (result *CallResultMessage) MarshalJSON() ([]byte, error) {
+	if result.Payload == nil {
+		return json.Marshal([]interface{}{result.Type(), result.id, make(map[string]interface{})})
+	}
 	return json.Marshal([]interface{}{result.Type(), result.id, result.Payload})
 }
 
