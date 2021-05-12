@@ -58,7 +58,11 @@ func (call *CallMessage) MarshalJSON() ([]byte, error) {
 		OCPP []interface{} `json:"ocpp"`
 	}
 	wrapper.ChargerID = call.chargerID
-	wrapper.OCPP = []interface{}{call.Type(), call.id, call.Action, call.Payload}
+	payload := make(map[string]interface{})  // allocate payload so when marshalled it is {}, not null
+	if call.Payload != nil {
+		payload = call.Payload
+	}
+	wrapper.OCPP = []interface{}{call.Type(), call.id, call.Action, payload}
 	b, err := json.Marshal(wrapper)
 	log.Debug("marshal: %s\n", b)
 	return b, err
